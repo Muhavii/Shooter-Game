@@ -1,89 +1,64 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.4.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.4.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.4.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.4.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.4.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.4.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.4.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.4.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.4.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.4.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Shooter Game</title>
+    <link href="/dist/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Critical styles */
+        body { margin: 0; padding: 0; overflow: hidden; }
+        canvas { display: block; }
     </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+</head>
+<body class="bg-gray-900 overflow-hidden">
+    <!-- Start Screen -->
+    <div id="start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-90 text-white text-center z-20">
+        <h1 class="text-5xl font-bold mb-8">Space Shooter</h1>
+        <p class="text-xl mb-8">Shoot the enemies before they reach the bottom!</p>
+        <button id="start-btn" class="px-8 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-2xl font-bold transition-colors">
+            Start Game
+        </button>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+    <div id="game-container" class="relative w-full h-screen bg-black touch-none hidden">
+        <!-- Game Elements -->
+        <div id="player" class="absolute w-12 h-12 bg-blue-500 rounded-full bottom-4 left-1/2 transform -translate-x-1/2"></div>
+        <div id="score" class="absolute top-4 right-4 text-white text-2xl font-bold">Score: 0</div>
+        
+        <!-- Game Over Screen -->
+        <div id="game-over" class="hidden fixed inset-0 flex items-center justify-center p-4 z-50">
+            <div class="absolute inset-0 bg-black bg-opacity-80" id="game-over-backdrop"></div>
+            <div class="relative w-full max-w-md bg-gray-900 bg-opacity-95 rounded-2xl p-6 md:p-8 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Game Over!</h2>
+                <p class="text-xl md:text-2xl text-gray-200 mb-6">Your score: <span id="final-score" class="text-blue-400 font-mono">0</span></p>
+                <button id="restart-btn" class="w-full py-4 px-8 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold text-xl md:text-2xl rounded-xl transition-all duration-200 active:scale-95 transform">
+                    Play Again
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Controls -->
+        <div id="mobile-controls" class="md:hidden fixed bottom-0 left-0 right-0 z-10">
+            <!-- Movement D-pad -->
+            <div class="grid grid-cols-3 gap-2 p-4 touch-none">
+                <div class="col-start-2">
+                    <button id="btn-up" class="w-full h-16 bg-gray-800 bg-opacity-50 rounded-lg text-white text-2xl">↑</button>
+                </div>
+                <div class="flex justify-between col-span-3">
+                    <button id="btn-left" class="w-1/3 h-16 bg-gray-800 bg-opacity-50 rounded-lg text-white text-2xl">←</button>
+                    <button id="btn-down" class="w-1/3 h-16 bg-gray-800 bg-opacity-50 rounded-lg text-white text-2xl">↓</button>
+                    <button id="btn-right" class="w-1/3 h-16 bg-gray-800 bg-opacity-50 rounded-lg text-white text-2xl">→</button>
+                </div>
+            </div>
+            
+            <!-- Shoot Button -->
+            <div class="absolute right-4 bottom-20">
+                <button id="btn-shoot" class="w-20 h-20 bg-red-500 bg-opacity-70 rounded-full text-white text-lg font-bold">FIRE</button>
+            </div>
+        </div>
+    </div>
+    <script src="/game.js"></script>
+</body>
 </html>
