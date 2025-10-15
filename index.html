@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Shooter Game</title>
+    <link href="dist/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-900 overflow-hidden">
+    <!-- Start Screen -->
+    <div id="start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-90 text-white text-center z-20">
+        <h1 class="text-5xl font-bold mb-8">Space Shooter</h1>
+        <p class="text-xl mb-8">Shoot the enemies before they reach the bottom!</p>
+        <button id="start-btn" class="px-8 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-2xl font-bold transition-colors">
+            Start Game
+        </button>
+    </div>
+
+    <div id="game-container" class="relative w-full h-screen bg-black touch-none hidden">
+        <!-- Game Elements -->
+        <div id="player" class="absolute w-12 h-12 bg-blue-500 rounded-full bottom-4 left-1/2 transform -translate-x-1/2"></div>
+        <div id="score" class="absolute top-4 right-4 text-white text-2xl font-bold">Score: 0</div>
+        
+        <!-- Game Over Screen -->
+        <div id="game-over" class="hidden fixed inset-0 flex items-center justify-center p-4 z-50">
+            <div class="absolute inset-0 bg-black bg-opacity-80" id="game-over-backdrop"></div>
+            <div class="relative w-full max-w-md bg-gray-900 bg-opacity-95 rounded-2xl p-6 md:p-8 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Game Over!</h2>
+                <p class="text-xl md:text-2xl text-gray-200 mb-6">Your score: <span id="final-score" class="text-blue-400 font-mono">0</span></p>
+                <button id="restart-btn" class="w-full py-4 px-8 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold text-xl md:text-2xl rounded-xl transition-all duration-200 active:scale-95 transform">
+                    Play Again
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Controls -->
+        <div id="mobile-controls" class="md:hidden fixed bottom-0 left-0 right-0 z-10">
+            <!-- Movement D-pad -->
+            <div class="grid grid-cols-3 gap-2 p-4 touch-none">
+                <div class="col-start-2">
+                    <button id="btn-up" class="w-full h-16 bg-gray-800 bg-opacity-50 rounded-lg text-white text-2xl">↑</button>
+                </div>
+                <div class="flex justify-between col-span-3">
+                    <button id="btn-left" class="w-1/3 h-16 bg-gray-800 bg-opacity-50 rounded-lg text-white text-2xl">←</button>
+                    <button id="btn-down" class="w-1/3 h-16 bg-gray-800 bg-opacity-50 rounded-lg text-white text-2xl">↓</button>
+                    <button id="btn-right" class="w-1/3 h-16 bg-gray-800 bg-opacity-50 rounded-lg text-white text-2xl">→</button>
+                </div>
+            </div>
+            
+            <!-- Shoot Button -->
+            <div class="absolute right-4 bottom-20">
+                <button id="btn-shoot" class="w-20 h-20 bg-red-500 bg-opacity-70 rounded-full text-white text-lg font-bold">FIRE</button>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
