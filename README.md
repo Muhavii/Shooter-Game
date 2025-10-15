@@ -25,13 +25,13 @@ A fast-paced, browser-based shooter game built with HTML5 Canvas and vanilla Jav
 
 ### Mobile View
 #### Game Start
-![Mobile Screenshot](./screenshots/screenshot4.jpg)
+![Mobile Screenshot](./screenshots/screenshot4.png)
 
 #### Game Play
-![Mobile Screenshot](./screenshots/screenshot5.jpg)
+![Mobile Screenshot](./screenshots/screenshot5.png)
 
 #### Game Over
-![Mobile Screenshot](./screenshots/screenshot6.jpg)
+![Mobile Screenshot](./screenshots/screenshot6.png)
 
 ## How to Play
 
